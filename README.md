@@ -5,31 +5,15 @@
 This project analyzes supply chain inventory behavior using PySpark and multiple
 data sources.
 
-The main supply chain dataset contains daily SKU-level inventory and demand
-records for 2024. It is enriched with:
+The primary dataset contains daily 2024 inventory and demand records by SKU and
+warehouse. It is enriched with:
 
 - U.S. federal holiday data
 - Daily weather observations
 
-The project focuses on demand patterns, inventory risk, promotions, supplier
-lead time, forecast accuracy, estimated financial performance, and external
-factors.
-
-The workflow includes data exploration, preprocessing, cross-source joins,
-Spark optimization, and business analysis.
-
----
-
-## Research Questions
-
-1. How does demand differ between holidays and non-holidays?
-2. Does demand vary across individual federal holidays?
-3. Are inventory-risk conditions more common during holidays?
-4. How do promotions affect demand and inventory risk?
-5. How does supplier lead time relate to inventory risk?
-6. How accurate is the demand forecast?
-7. What is the estimated financial impact of demand patterns?
-8. Are daily weather conditions associated with demand or inventory risk?
+The project includes data exploration, preprocessing, cross-source joins,
+inventory-risk analysis, forecast evaluation, financial estimation, and a cloud
+deployment using AWS.
 
 ---
 
@@ -43,16 +27,16 @@ Spark optimization, and business analysis.
 - Jupyter Notebook
 - Parquet
 - Git / GitHub
-
-Cloud-scale deployment will use course-provided AWS infrastructure.
+- Amazon S3
+- AWS Glue Data Catalog
+- Amazon Athena
+- Terraform
 
 ---
 
 ## Datasets
 
 ### Supply Chain Inventory Dataset
-
-The primary fact table contains:
 
 - 91,250 records
 - 365 dates
@@ -61,53 +45,22 @@ The primary fact table contains:
 - 10 suppliers
 - 4 regional categories
 
-The grain of the dataset is:
+Dataset grain:
 
 `Date + SKU_ID + Warehouse_ID`
 
-Each combination appears once.
-
-Important fields include:
-
-- Units_Sold
-- Inventory_Level
-- Supplier_Lead_Time_Days
-- Reorder_Point
-- Order_Quantity
-- Unit_Cost
-- Unit_Price
-- Promotion_Flag
-- Stockout_Flag
-- Demand_Forecast
-
 ### U.S. Federal Holiday Dataset
 
-The holiday dimension contains the 11 federal holidays observed in 2024.
+Contains the 11 federal holidays observed in 2024.
 
-Fields include:
-
-- Date
-- Official holiday name
-- Date definition
-- Year established
-
-The dataset is joined to the supply chain fact table using `Date`.
+The holiday dataset is joined to the supply chain fact table using `Date`.
 
 ### Weather Dataset
 
-The weather dataset contains daily observations from Branson West Municipal
-Emerson Field Airport in Missouri.
+Daily weather observations from one Missouri weather station.
 
-Fields used include:
-
-- Temperature
-- Maximum temperature
-- Minimum temperature
-- Precipitation
-- Wind speed
-
-Weather is joined by date only and is treated as an exploratory external factor
-because specific warehouse locations are not available.
+Weather is joined by date and treated as an exploratory external factor because
+warehouse-specific geographic locations are unavailable.
 
 ---
 
@@ -118,12 +71,7 @@ CS675_Supply_Chain_Project/
 │
 ├── data/
 │   ├── raw/
-│   │   ├── supply_chain_dataset1.csv
-│   │   ├── us_holidays_2024.csv
-│   │   └── weather2024.csv
-│   │
 │   └── processed/
-│       └── final_joined/
 │
 ├── notebooks/
 │   ├── 01_data_exploration.ipynb
@@ -132,8 +80,5 @@ CS675_Supply_Chain_Project/
 │   └── 04_analysis.ipynb
 │
 ├── output/
-│   ├── tables/
-│   └── charts/
-│
 ├── .gitignore
 └── README.md
