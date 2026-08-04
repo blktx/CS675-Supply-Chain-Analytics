@@ -32,3 +32,15 @@ derby.log
 terraform.tfvars
 *.tfvars
 .env
+
+# Terraform
+**/.terraform/
+**/.terraform.lock.hcl
+**/terraform.tfvars
+**/*.tfstate
+**/*.tfstate.*
+**/crash.log
+
+# AWS credentials and local configuration
+.aws/
+credentials
